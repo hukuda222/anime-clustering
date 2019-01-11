@@ -1,4 +1,4 @@
-# anime-divide
+# anime-clustering
 アニメのタイトルで検索し、ヒットしたサイトの記事の内容からアニメを分類しました。
 特徴量はword2vecとtf-idfを、分類手法はK平均法と群平均法を用いました。
 
