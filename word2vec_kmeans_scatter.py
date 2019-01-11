@@ -3,7 +3,6 @@ import random
 from sklearn.decomposition import TruncatedSVD
 import matplotlib.pyplot as plt
 from matplotlib import cm
-
 plt.rcParams['font.family'] = 'Arial Unicode MS'
 
 
@@ -35,7 +34,8 @@ def clustering(vectors, label_count, learning_count_max=1000):
                                      v in zip(center_vectors[label], vec)]
         for i, center_vector in enumerate(center_vectors):
             center_vectors[i] = [
-                v / label_vector.count(i) if label_vector.count(i) != 0 else 0 for v in center_vector]
+                v / label_vector.count(i) if label_vector.count(i) != 0 else 0
+                for v in center_vector]
         # 各ベクトルのラベルの再割当て
         for i, vec in enumerate(vectors):
             label_vector[i] = near(vec, center_vectors)
@@ -60,7 +60,7 @@ def get_list():
 sentences = word2vec.Text8Corpus("corpus_wakati2.txt")
 model = word2vec.Word2Vec(sentences, size=100, min_count=20, window=5)
 # モデルの保存と読込
-# model.save("sample2.model")
+model.save("sample2.model")
 # 単語間の類似度計算
 
 model = word2vec.Word2Vec.load("sample2.model")
@@ -79,9 +79,10 @@ if __name__ == '__main__':
     for i in range(34):
         if i != 2:
             axes.annotate(
-                titles[i], xy=(po[i][0], po[i][1]))
+                titles[i], xy=(po[i][0], po[i][1] + 0.25
+                               - (random.random() * 0.5)))
             axes.plot(po[i][0], po[i][1],
                       color=cm.hsv(float(near(vectors[i], centers)) / 5),
                       ms=6.0, zorder=3, marker="o")
     plt.axis('tight')
-    plt.show()
+    plt.savefig("po.png")
